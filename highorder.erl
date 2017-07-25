@@ -1,7 +1,7 @@
 -module(highorder).
 
 -export([filter/2, map/2, tail_filter/2, tail_filter/3,
-	 tail_map/2, tail_map/3]).
+	 tail_map/2, tail_map/3, fold/2]).
 
 map(_, []) -> [];
 map(F, [X | Xs]) -> [F(X) | map(F, Xs)].
@@ -27,3 +27,9 @@ tail_filter(F, [X | Xs], Acc) ->
       true -> tail_filter(F, Xs, Acc ++ X);
       false -> tail_filter(F, Xs, Acc)
     end.
+
+fold(_, []) -> [];
+fold(F, [X | Xs]) -> case F(X) of
+	true -> X;
+	false -> fold(F, Xs)
+end.
